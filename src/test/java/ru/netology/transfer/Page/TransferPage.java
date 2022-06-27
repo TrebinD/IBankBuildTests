@@ -1,5 +1,8 @@
+package ru.netology.transfer.Page;
+
 import com.codeborne.selenide.SelenideElement;
 import lombok.Data;
+import ru.netology.transfer.Data.UserData;
 
 import static com.codeborne.selenide.Condition.hidden;
 import static com.codeborne.selenide.Selenide.$x;
@@ -18,6 +21,8 @@ public class TransferPage {
         transfer.click();
         error.should(hidden);
     }
+
+
 }
 
 

@@ -1,3 +1,5 @@
+package ru.netology.transfer.Data;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 

@@ -1,17 +1,18 @@
+package ru.netology.transfer.Page;
+
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import lombok.Data;
 
-
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$$x;
+import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.Integer.valueOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Data
+
 public class DashboardPage {
     private ElementsCollection buttonTopUp = $$x("//button[@data-test-id=\"action-deposit\"]");
     private SelenideElement buttonReload = $x("//button[@data-test-id=\"action-reload\"]");
     private ElementsCollection cards = $$x("//li[@class=\"list__item\"]");
-    private SelenideElement getBalanceFirst = $x("//*[@id=\"root\"]/div/ul/li[1]/div/text()[3]");
 
 
     public DashboardPage() {
@@ -29,4 +30,14 @@ public class DashboardPage {
         buttonTopUp.get(indexCardTo).click();
         return new TransferPage();
     }
+
+    public void newBalance(int id, int expected) {
+        int actualBalance = getCardBalance(id);
+        assertEquals(expected, actualBalance);
+    }
+
+    public void reload() {
+        buttonReload.click();
+    }
+
 }
