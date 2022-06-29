@@ -12,8 +12,8 @@ public class AuthorizationPage {
     private SelenideElement input = $x("//button[@data-test-id=\"action-login\"]");
 
     public VereficationPage login(UserData userData) {
-        loginInput.val(userData.getLogin());
-        passwordInput.val(userData.getPassword());
+        loginInput.val(UserData.getAuthInfo().getLogin());
+        passwordInput.val(UserData.getAuthInfo().getPassword());
         input.click();
         return new VereficationPage();
     }

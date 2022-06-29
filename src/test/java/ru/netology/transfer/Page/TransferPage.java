@@ -5,9 +5,9 @@ import lombok.Data;
 import ru.netology.transfer.Data.UserData;
 
 import static com.codeborne.selenide.Condition.hidden;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
-@Data
 public class TransferPage {
     private SelenideElement amountIn = $x("//span[@data-test-id=\"amount\"]//input");
     private SelenideElement input = $x("//span[@data-test-id=\"from\"]//input");
@@ -20,6 +20,10 @@ public class TransferPage {
         input.val(userData.getCards(indexCard));
         transfer.click();
         error.should(hidden);
+    }
+
+    public void errorShow() {
+        error.should(visible);
     }
 
 

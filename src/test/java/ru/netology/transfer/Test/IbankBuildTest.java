@@ -9,9 +9,7 @@ import ru.netology.transfer.Page.DashboardPage;
 import ru.netology.transfer.Page.TransferPage;
 import ru.netology.transfer.Page.VereficationPage;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IbankBuildTest {
     UserData userData;
@@ -21,17 +19,20 @@ public class IbankBuildTest {
     @BeforeEach
     public void autotenification() {
         open("http://localhost:9999/");
-        AuthorizationPage authorizationPage = new AuthorizationPage();
         userData = new UserData();
-        VereficationPage vereficationPage = authorizationPage.login(userData);
-        dashboardPage = vereficationPage.verefication(userData);
+        AuthorizationPage authorizationPage = new AuthorizationPage();
+        authorizationPage.login(userData);
+        VereficationPage vereficationPage = new VereficationPage();
+        vereficationPage.verefication(userData);
+        dashboardPage = new DashboardPage();
     }
 
     @Test
     public void transferByCardFirstToCardSecond() {
         int balanceFirstCard = dashboardPage.getCardBalance(0);
         int balanceSecondCard = dashboardPage.getCardBalance(1);
-        TransferPage transferPage = dashboardPage.transfer(0);
+        TransferPage transferPage = new TransferPage();
+        dashboardPage.transfer(0);
         transferPage.transferMoney(userData, 1000, 1);
         dashboardPage.reload();
         dashboardPage.newBalance(0, balanceFirstCard + 1000);
@@ -56,7 +57,7 @@ public class IbankBuildTest {
         dashboardPage.transfer(0);
         TransferPage transferPage = new TransferPage();
         transferPage.transferMoney(userData, balance + 10000, 1);
-        transferPage.getError().shouldBe(visible);
+        transferPage.errorShow();
     }
 
     @Test
@@ -65,7 +66,7 @@ public class IbankBuildTest {
         dashboardPage.transfer(1);
         TransferPage transferPage = new TransferPage();
         transferPage.transferMoney(userData, balance + 10000, 0);
-        transferPage.getError().shouldBe(visible);
+        transferPage.errorShow();
 
     }
 
@@ -75,7 +76,7 @@ public class IbankBuildTest {
         dashboardPage.transfer(0);
         TransferPage transferPage = new TransferPage();
         transferPage.transferMoney(userData, balance + 10000, 2);
-        transferPage.getError().shouldBe(visible);
+        transferPage.errorShow();
 
     }
 

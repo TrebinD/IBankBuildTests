@@ -13,12 +13,11 @@ public class VereficationPage {
     private SelenideElement error = $x("//div[@class='notification__content']");
 
     public DashboardPage verefication(UserData userData) {
-        verCod.val(userData.getVerificationCode());
+        verCod.val(userData.getVerificationCodeFor(UserData.getAuthInfo()).getCode());
         buttonVerification.click();
         error.shouldBe(hidden);
 
         return new DashboardPage();
 
     }
-
 }
